@@ -1,0 +1,10 @@
+- name: Check if k3s service is configured
+  stat:
+    path: "/etc/systemd/system/k3s-agent.service"
+  register: agent_svc
+
+- name: Uninstall k3s agent 
+  command: >-
+    /usr/local/bin/k3s-agent-uninstall.sh
+  when: agent_svc.stat.exists
+

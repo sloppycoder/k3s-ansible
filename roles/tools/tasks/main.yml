@@ -1,0 +1,13 @@
+- name: Determine binary variable
+  set_fact:
+    download_arch: "{{ 'arm64' if ansible_architecture == 'aarch64' else ansible_architecture }}"
+
+- name: Download k9s binary {{ k9s_version }}
+  unarchive:
+    src: "https://github.com/derailed/k9s/releases/download/{{ k9s_version }}/k9s_Linux_{{ download_arch }}.tar.gz"
+    remote_src: yes
+    dest: /usr/local/bin
+    mode: "0755"
+    owner: root
+    creates: /usr/local/bin/k9s
+  become: yes

@@ -1,16 +1,15 @@
----
+- name: Check if k3s service is configured
+  stat:
+    path: "/etc/systemd/system/k3s-agent.service"
+  register: agent_svc
 
-- name: Copy K3s service file
-  template:
-    src: "k3s.service.j2"
-    dest: "{{ systemd_dir }}/k3s-node.service"
-    owner: root
-    group: root
-    mode: 0755
+- name: Install k3s agent
+  shell: |
+    export INSTALL_K3S_VERSION={{ k3s_version }}
+    export K3S_KUBECONFIG_MODE="0644"
+    export K3S_URL=https://{{ master_ip }}:6443
+    export K3S_TOKEN="{{ hostvars[groups["master"][0]].token }}"
+    curl -sfL https://get.k3s.io | sh -
+  when: not agent_svc.stat.exists
 
-- name: Enable and check K3s service
-  systemd:
-    name: k3s-node
-    daemon_reload: yes
-    state: restarted
-    enabled: yes
+
