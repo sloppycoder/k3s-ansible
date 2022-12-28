@@ -1,0 +1,18 @@
+[master]
+pie1 ansible_host=192.168.1.201 ansible_port=222
+
+[node]
+pie2 ansible_host=192.168.1.202 ansible_port=222
+pie3 ansible_host=192.168.1.203 ansible_port=222
+
+[cluster:children]
+master
+node
+
+[cluster:vars]
+k3s_version=v1.24.8+k3s1
+ansible_user=ubuntu
+master_ip="{{ hostvars[groups['master'][0]]['ansible_host'] | default(groups['master'][0]) }}"
+install_k3s_exec="-disable traefik"
+k9s_version="v0.26.7"
+
