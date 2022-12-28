@@ -10,10 +10,10 @@ Modified to perform the following:
 
 ```
 # install the cluster
-ansible-playbook install.yml -i inventory/rack1/hosts.ini 
+ansible-playbook install.yml -i inventory/rack1
 
 # tear down the cluster
-ansible-playbook reset.yml -i inventory/rack1/hosts.ini 
+ansible-playbook reset.yml -i inventory/rack1
 
 ```
 
