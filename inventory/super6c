@@ -1,12 +1,12 @@
 [master]
-pie4 ansible_host=192.168.1.204 ansible_port=222
+pie4
 
 [node]
-pie5 ansible_host=192.168.1.205 ansible_port=222
-pie6 ansible_host=192.168.1.206 ansible_port=222
-pie7 ansible_host=192.168.1.207 ansible_port=222
-pie8 ansible_host=192.168.1.208 ansible_port=222
-pie9 ansible_host=192.168.1.209 ansible_port=222
+pie5
+pie6
+pie7
+pie8
+pie9
 
 [cluster:children]
 master
@@ -14,8 +14,9 @@ node
 
 [cluster:vars]
 k3s_version=v1.24.8+k3s1
-ansible_user=ubuntu
-master_ip="{{ hostvars[groups['master'][0]]['ansible_host'] | default(groups['master'][0]) }}"
-install_k3s_exec="-disable traefik"
+ansible_user=pi
+master_ip="192.168.1.204"
+install_k3s_exec="--disable=traefik --disable=servicelb"
 k9s_version="v0.26.7"
-
+raspberry_pi=yes
+enable_longhorn=yes
