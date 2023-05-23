@@ -13,6 +13,6 @@ node
 k3s_version=v1.24.8+k3s1
 ansible_user=ubuntu
 master_ip="{{ hostvars[groups['master'][0]]['ansible_host'] | default(groups['master'][0]) }}"
-install_k3s_exec="-disable traefik"
-k9s_version="v0.26.7"
-enable_longhorn=yes
+k9s_version="v0.27.4"
+helm_version="v3.12.0"
+enable_longhorn=no

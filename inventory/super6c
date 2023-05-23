@@ -13,10 +13,10 @@ master
 node
 
 [cluster:vars]
-k3s_version=v1.24.8+k3s1
+k3s_version=v1.27.1+k3s1
 ansible_user=pi
 master_ip="192.168.1.204"
-install_k3s_exec="--disable=traefik"
-k9s_version="v0.26.7"
+k9s_version="v0.27.4"
+helm_version="v3.12.0"
 raspberry_pi=yes
 enable_longhorn=yes

@@ -11,3 +11,19 @@
     owner: root
     creates: /usr/local/bin/k9s
   become: yes
+
+- name: Download helm binary {{ helm_version }}
+  unarchive:
+    src: "https://get.helm.sh/helm-{{ helm_version }}-linux-{{ download_arch }}.tar.gz"
+    remote_src: yes
+    dest: /tmp
+    creates: /tmp/linux-{{ download_arch }}/helm
+    become: yes
+
+- name: Install helm binary
+  shell:
+    cmd: |
+      set -e
+      cp /tmp/linux-{{ download_arch }}/helm /usr/local/bin/.
+    creates: /usr/local/bin/helm
+    become: yes
