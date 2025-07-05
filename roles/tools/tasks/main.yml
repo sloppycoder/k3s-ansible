@@ -1,3 +1,19 @@
+- name: Install utility packages
+  apt:
+    update_cache: yes
+    pkg:
+      - bind9-dnsutils
+      - curl
+      - grep
+      - iperf3
+      - jq
+      - net-tools
+      - peco
+      - screen
+      - wget
+  become: yes
+  when: enable_longhorn | default(false)
+
 - name: Determine binary variable
   set_fact:
     download_arch: "{{ 'arm64' if ansible_architecture == 'aarch64' else ansible_architecture }}"
@@ -41,4 +57,3 @@
       cp /tmp/flux/flux /usr/local/bin/.
     creates: /usr/local/bin/flux
   become: yes
-
