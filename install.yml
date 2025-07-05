@@ -1,5 +1,4 @@
 ---
-
 - hosts: cluster
   gather_facts: yes
   become: yes
@@ -9,8 +8,8 @@
 
 - hosts: master
   roles:
-    - role: k3s/master
     - role: tools
+    - role: k3s/master
 
 - hosts: node
   roles:

@@ -1,10 +1,11 @@
 ---
-- name: Enable IPv4 forwarding
-  sysctl:
-    name: net.ipv4.ip_forward
-    value: "1"
-    state: present
-    reload: yes
+# not sure why this needed
+# - name: Enable IPv4 forwarding
+#   sysctl:
+#     name: net.ipv4.ip_forward
+#     value: "1"
+#     state: present
+#     reload: yes
 
 - name: Disable IPv6 completely
   sysctl:
@@ -37,7 +38,7 @@
 
 - name: Adjust fs.inotify.max_user_instances
   sysctl:
-    name: fs.inotify.max_user_instsances
+    name: fs.inotify.max_user_instances
     value: "512"
     state: present
     reload: yes
@@ -48,3 +49,8 @@
     value: "16384"
     state: present
     reload: yes
+
+- name: Disalbe man-db update
+  shell: |
+    dpkg-divert --divert /usr/bin/mandb.disabled --rename /usr/bin/mandb
+  become: yes

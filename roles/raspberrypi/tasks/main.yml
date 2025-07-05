@@ -14,8 +14,7 @@
 - name: Set raspberry_pi fact to true
   set_fact:
     raspberry_pi: true
-  when:
-    grep_cpuinfo_raspberrypi.rc == 0 or grep_device_tree_model_raspberrypi.rc == 0
+  when: grep_cpuinfo_raspberrypi.rc == 0 or grep_device_tree_model_raspberrypi.rc == 0
 
 - name: Set detected_distribution to Raspbian
   set_fact:
@@ -50,15 +49,11 @@
   when:
     - raspberry_pi|default(false)
 
-- name: Install utilities required by Longhorn (https://longhorn.io/docs/1.3.2/deploy/install/#installing-open-iscsi)
+- name: Install utilities required by Longhorn (https://longhorn.io/docs/1.9.0/deploy/install/#installing-open-iscsi)
   apt:
     update_cache: yes
     pkg:
       - open-iscsi
-      - curl
-      - grep
-      - gawk
-      - util-linux
       - nfs-common
   become: yes
   when: enable_longhorn | default(false)

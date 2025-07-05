@@ -11,12 +11,21 @@
       - peco
       - screen
       - wget
+      - zsh
   become: yes
-  when: enable_longhorn | default(false)
 
-- name: Determine binary variable
-  set_fact:
-    download_arch: "{{ 'arm64' if ansible_architecture == 'aarch64' else ansible_architecture }}"
+# will be used to download binaries from github releases
+- set_fact:
+    download_arch: >-
+      {{
+        {
+          'x86_64': 'amd64',
+          'aarch64': 'arm64',
+          'armv7l': 'armv7',
+          'i386': '386',
+          'i686': '386'
+        }[ansible_architecture]
+      }}
 
 - name: Download k9s binary {{ k9s_version }}
   unarchive:
@@ -45,7 +54,7 @@
 
 - name: Download flux binary {{ flux_version }}
   unarchive:
-    src: "https://github.com/fluxcd/flux2/releases/download/{{ flux_version }}/flux_{{ flux_version }}_linux_{{ download_arch }}.tar.gz"
+    src: "https://github.com/fluxcd/flux2/releases/download/v{{ flux_version }}/flux_{{ flux_version }}_linux_{{ download_arch }}.tar.gz"
     remote_src: yes
     dest: /tmp
     creates: /tmp/flux
@@ -54,6 +63,6 @@
   shell:
     cmd: |
       set -e
-      cp /tmp/flux/flux /usr/local/bin/.
+      cp /tmp/flux /usr/local/bin/.
     creates: /usr/local/bin/flux
   become: yes
