@@ -26,3 +26,25 @@
     value: "1"
     state: present
     reload: yes
+
+# adjust fs.inotify for fluent_bit
+- name: Adjust fs.inotify.max_user_watches
+  sysctl:
+    name: fs.inotify.max_user_watches
+    value: "1048576"
+    state: present
+    reload: yes
+
+- name: Adjust fs.inotify.max_user_instances
+  sysctl:
+    name: fs.inotify.max_user_instsances
+    value: "512"
+    state: present
+    reload: yes
+
+- name: Adjust fs.inotify.max_queued_events
+  sysctl:
+    name: fs.inotify.max_queued_events
+    value: "16384"
+    state: present
+    reload: yes
