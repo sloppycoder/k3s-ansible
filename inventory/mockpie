@@ -1,22 +1,15 @@
 [master]
-pie4
+mockpie ansible_host=mockpie.vino9.net ansible_port=22
 
 [node]
-pie5
-pie6
-pie7
-pie8
-pie9
 
 [cluster:children]
 master
-node
 
 [cluster:vars]
 k3s_version=v1.33.1+k3s1
 ansible_user=pi
-master_ip="192.168.1.204"
+master_ip="{{ hostvars[groups['master'][0]]['ansible_host'] | default(groups['master'][0]) }}"
 k9s_version="v0.50.6"
 helm_version="v3.17.3"
 enable_longhorn=yes
-raspberry_pi=yes
