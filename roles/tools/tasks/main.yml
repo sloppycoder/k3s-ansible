@@ -26,3 +26,19 @@
       cp /tmp/linux-{{ download_arch }}/helm /usr/local/bin/.
     creates: /usr/local/bin/helm
   become: yes
+
+- name: Download flux binary {{ flux_version }}
+  unarchive:
+    src: "https://github.com/fluxcd/flux2/releases/download/{{ flux_version }}/flux_{{ flux_version }}_linux_{{ download_arch }}.tar.gz"
+    remote_src: yes
+    dest: /tmp
+    creates: /tmp/flux
+
+- name: Install flux binary
+  shell:
+    cmd: |
+      set -e
+      cp /tmp/flux/flux /usr/local/bin/.
+    creates: /usr/local/bin/flux
+  become: yes
+
