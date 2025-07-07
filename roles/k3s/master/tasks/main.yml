@@ -7,7 +7,7 @@
   shell: |
     export INSTALL_K3S_VERSION={{ k3s_version }}
     export K3S_KUBECONFIG_MODE="0644"
-    curl -sfL https://get.k3s.io | sh -
+    curl -sfL https://get.k3s.io | sh - --flannel-backend=vxlan --disable-network-policy
   when: not master_svc.stat.exists
 
 - name: Wait for node-token
