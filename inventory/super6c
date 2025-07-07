@@ -13,10 +13,10 @@ master
 node
 
 [cluster:vars]
-k3s_version=v1.33.1+k3s1
+k3s_version=v1.33.2+k3s1
 ansible_user=pi
 master_ip=192.168.1.204
-k9s_version=v0.50.6
+k9s_version=v0.50.7
 helm_version=v3.17.3
 flux_version=2.6.3
 enable_longhorn=yes
